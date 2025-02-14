@@ -11,7 +11,7 @@ This guide provides troubleshooting solutions for common API issues, using an ac
 - **Expired API Key**: The API key is outdated or has been revoked.
 - **IP Restriction**: The API key might be restricted to specific IP addresses.
 - **Incorrect API Endpoint**: Using the wrong URL or an 
-https://api.openweathermap.org/data/2.5/weather?q=Austin&appid=YOUR_API_KEY
+https://api.openweathermap.org/data/2.5/weather?q=Austin&appid=NoKey
 
 
 ✅ **Check API Key Permissions**  
@@ -34,6 +34,7 @@ If the API returns:
 ```
 
 The key is likely incorrect.
+
 
 # 2. Slow API Response Times  
 ### Potential Causes  
@@ -97,22 +98,26 @@ If a field (e.g., "visibility") is missing, the API might not provide it for tha
 
 ✅ Handle Missing Fields Gracefully
 Modify the script to avoid KeyErrors:
+```
 data = response.json()
 visibility = data.get("visibility", "Data not available")
 pressure = data.get("main", {}).get("pressure", "Data not available")
+```
 
 ✅ Check API Documentation for Changes
-
 Visit OpenWeatherMap’s API documentation to confirm field availability.
+
 ✅ Ensure Correct Request Parameters
 
-Some API fields require additional query parameters. Example:
+Some API fields require additional query parameters. 
+Example:
 https://api.openweathermap.org/data/2.5/weather?q=Austin&appid=YOUR_API_KEY&units=metric
 
-Adding units=metric ensures temperature is returned in Celsius instead of Kelvin.
+Adding units=metric ensures the temperature is returned in Celsius instead of Kelvin.
 
 ✅ Contact API Support
 
 If the missing field is critical and should be present, report it to OpenWeatherMap.
+
 
 For more details, visit OpenWeatherMap API Documentation here https://openweathermap.org/api/one-call-3#errorstructure
